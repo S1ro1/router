@@ -39,6 +39,9 @@ GPU_MEMORY_UTILIZATION=${GPU_MEMORY_UTILIZATION:-0.6}
 PREFILL_BLOCK_SIZE=${PREFILL_BLOCK_SIZE:-128}
 DECODE_BLOCK_SIZE=${DECODE_BLOCK_SIZE:-128}
 
+# Intra-node data parallel size (exercises DP-aware routing)
+INTRA_NODE_DP_SIZE=${INTRA_NODE_DP_SIZE:-2}
+
 # Port configuration
 PREFILL_BASE_PORT=${PREFILL_BASE_PORT:-8100}
 DECODE_BASE_PORT=${DECODE_BASE_PORT:-8200}
@@ -316,6 +319,7 @@ vllm-router \
   --port "$ROUTER_PORT" \
   --policy power_of_two \
   --vllm-pd-disaggregation \
+  --intra-node-data-parallel-size "$INTRA_NODE_DP_SIZE" \
   $PREFILL_ARGS \
   $DECODE_ARGS \
   --worker-startup-check-interval 1 \
